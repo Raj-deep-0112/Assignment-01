@@ -1,41 +1,27 @@
-import java.util.*;
-
-public class Problem_one {
-
+public class Problem_One {
     public static void main(String[] args) {
-
-        Scanner sc = new Scanner(System.in);
-        String s = sc.next(); 
+        String s = "abca";
         int n = s.length();
-        String newString = s + s;
-
-        int[] freq = new int[26];
-
-        int left = 0;
-        int currentSum = 0;
         int maxSum = 0;
 
-        for (int right = 0; right < newString.length(); right++) {
+        String doubled = s + s; 
 
-            char ch = newString.charAt(right);
-            int index = ch - 'a';
+        for (int i = 0; i < n; i++) {
+            boolean[] seen = new boolean[26];
+            int sum = 0;
 
-            while (freq[index] > 0 || (right - left + 1) > n) {
+            for (int j = i; j < i + n; j++) {
+                char ch = doubled.charAt(j);
 
-                char removeChar = newString.charAt(left);
-                int removeIndex = removeChar - 'a';
-                freq[removeIndex]--;
-                currentSum -= (removeChar - 'a' + 1);
-                left++;
-            }
-
-            freq[index]++;
-            currentSum += (ch - 'a' + 1);
-
-            if (currentSum > maxSum) {
-                maxSum = currentSum;
+                if (seen[ch - 'a']) {
+                    break;
+                }
+                seen[ch - 'a'] = true;
+                sum += (ch - 'a' + 1);
+                maxSum = Math.max(maxSum, sum);
             }
         }
+
         System.out.println(maxSum);
     }
 }
